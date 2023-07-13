@@ -16,25 +16,29 @@ describe("GET /tasks", () => {
 });
 
 describe("POST /tasks", () => {
+  describe("givena a title and description", () => {
+    const newTask = {
+      title: "title task",
+      description: "description task",
+    };
+
     //Should respons with a 200 status code
     test("shouuld respond with a 200 status code", async () => {
-      const response = await request(app).post("/tasks").send();
+      const response = await request(app).post("/tasks").send(newTask);
       expect(response.statusCode).toBe(200);
     });
     //should respond with a content-type of application/json
     test("should have a content-type: application.json in header", async () => {
-      const response = await request(app).post("/tasks").send();
+      const response = await request(app).post("/tasks").send(newTask);
       expect(response.headers["content-type"]).toEqual(
         expect.stringContaining("json")
       );
     });
-  //should respond with a json object containing the new task with an id
-  test("should respond with an task ID", async () => {
-    const response = await request(app).post("/tasks").send({
-      title: "test taks",
-      description: "test Description",
+    //should respond with a json object containing the new task with an id
+    test("should respond with an task ID", async () => {
+      const response = await request(app).post("/tasks").send({ newTask });
+      expect(response.body.id).toBeDefined();
     });
-    expect(response.body.id).toBeDefined();
-    console.log(response.body.id);
   });
+  
 });
