@@ -11,7 +11,7 @@ app.get("/tasks", (req, res) => {
 });
 
 app.post("/tasks", (req, res) => {
-  res.send("tasks");
+  res.json({});
 });
 
 export default app;
