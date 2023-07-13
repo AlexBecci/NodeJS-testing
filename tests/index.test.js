@@ -16,7 +16,7 @@ describe("GET /tasks", () => {
 });
 
 describe("POST /tasks", () => {
-  describe("givena a title and description", () => {
+  describe("given a title and description", () => {
     const newTask = {
       title: "title task",
       description: "description task",
@@ -40,5 +40,17 @@ describe("POST /tasks", () => {
       expect(response.body.id).toBeDefined();
     });
   });
-  
+  describe("when title or decription is missing", () => {
+    test("Sould respond with a 400 status code", async () => {
+      const fields = [
+        {},
+        { title: "Test task" },
+        { description: "Test description" },
+      ];
+     for( const i of field){
+        const response = await request(app).post("/task").send(i);
+        expect(response.statusCode).toBe(400);
+     }
+    });
+  });
 });
